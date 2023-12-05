@@ -1,3 +1,4 @@
+from action import sair
 
 # função menu inicial terá um while 
 # que enquando continuar no menu for 
@@ -47,14 +48,14 @@ def menuInicial():
         elif opcao == '9':
             print("")
         elif opcao == '0':
-            print("")
+            sair()
         else:
             print('\t\tEssa opção não está disponivel!')
                 
-            continuarMenu = input('\t\tDeseja voltar ao menu principal? (s/n)').lower()
+            continuarMenu = input('\t\tDeseja voltar ao menu principal? (s/n)').lower() #converte strings para minúsculas
 
          
          
 if __name__ == '__main__':
         
-    menuInicial()
+    menuInicial() #Executa o menu inicial
