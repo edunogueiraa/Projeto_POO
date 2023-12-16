@@ -1,13 +1,3 @@
-from action import contar_compra
-#from action import ultima_compra
-#from action import cadastrar_compra
-#from action import listar_produtos
-#from action import deletar_compra
-#from action import buscar_compra
-#from action import atualizar_precos
-#from action import buscar_produto
-from action import emitir_nota_fiscal
-#from action import cadastrar_produto
 from action import sair
 
 # função menu inicial terá um while 
@@ -24,16 +14,16 @@ def menuInicial():
         opcao = input(f'''
         {'-' * 64}
                     PROJETO LOJA DE TINTAS (POO)            
-        {contar_compra()} COMPRAS CADASTRADAS\n
+        -contar_compra()- COMPRAS CADASTRADAS\n
         ÚLTIMA COMPRA: \n 
 
         MENU PRINCIPAL:
 
         [1] CADASTRAR COMPRA       \t[6] ATUALIZAR PREÇOS
-        [2] LISTAR COMPRAS         \t[7] BUSCAR PRODUTO POR NOME
-        [3] DELETAR COMPRA         \t[8] EMITIR NOTA FISCAL
-        [4] BUSCAR COMPRA          \t[9] CADASTRAR PRODUTO
-        [5] EMITIR NOTA FISCAL     \t[0] SAIR DO MENU
+        [2] LISTAR COMPRAS         \t[7] BUSCAR COMPRA POR NOME
+        [3] DELETAR COMPRA         \t[0] SAIR DO MENU
+        [4] RESETAR ARQUIVO        
+        [5] SOBRE O CLIENTE     
                                     
         {'-' * 64}
 

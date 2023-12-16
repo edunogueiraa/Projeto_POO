@@ -1,28 +1,13 @@
 from time import sleep
-from classes.compras import Compras
+from classes.compras import Compra
+from classes.arquivo import Arquivo
+
+def atualizar_compra():
+    id_compra = int(input('\t\tDigite o id da compra para atualizar: '))
+    deletar_compra_por_id (id_compra)
+    listar_compras()
 
 
-
-
-
-
-
-
-
-
-def contar_compra():
-    Compras.get_quantidade_compra()
-
-def emitir_nota_fiscal():
-    print(f'''
-    {'-' * 40}
-                NOTA FISCAL             
-    ID: {Compras.get_id_compra()}
-    Cliente: {Compras.get_nome_cliente()}
-    Produtos: {", ".join(Compras.get_nome_produtos())}
-    Total: R${Compras.get_valor_compra:.2f}
-    {'-' * 40}
-    ''')
 
 def sair():
     print(f'''
