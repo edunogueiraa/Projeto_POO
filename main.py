@@ -1,3 +1,4 @@
+from action import listar_compra
 from action import contar_compra
 from action import cadastrar_compra
 from action import resetar_arquivo
@@ -35,7 +36,7 @@ def menuInicial():
         if opcao == "1":
             cadastrar_compra()
         elif opcao == "2":
-            listar_produtos()
+            listar_compra()
         elif opcao == "3":
             deletar_compra()
         elif opcao == "4":

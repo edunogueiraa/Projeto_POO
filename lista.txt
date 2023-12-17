@@ -1,1 +1,2 @@
-Azul, rosa e roxa , 1,Eduardo, 99999999,Rua das ruas , 3, 30.0
+azul - rosa - roxo , 1,Eduardo Nogueira, 98345788,Rua das bandeiras, 3, 30.0
+verde - vermelho - preto - cinza, 2,Bruno silva, 99999999,Rua dos devs, 4, 40.0
