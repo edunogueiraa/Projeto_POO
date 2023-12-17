@@ -8,8 +8,9 @@ def cadastrar_compra():
     nome_cliente = input('\t\tEscreva o nome do cliente: ')
     telefone_cliente = input('\t\tEscreva o telefone do cliente: ')
     endereco_cliente = input('\t\tEscreva o endereço do cliente: ')
-    nome_produto = input('\t\tEscreva o nome do produto: ')
-    quantidade_compra = input('\t\tQuantidade de latas de tinta: ')
+    nome_produto = input('\t\tDigite as cores *(azul, rosa): ')
+    quantidade_compra = int(input('\t\tQuantidade de latas de tinta: '))
+    valor_compra = float(input('\t\tDigite o valor atual de uma lata de tinta: '))
 
     nova_compra = Compra(
         id_compra,
@@ -18,22 +19,21 @@ def cadastrar_compra():
         endereco_cliente,
         nome_produto,
         quantidade_compra,
+        valor_compra
     )
 
     try:
         arquivo = Arquivo('lista.txt', 'a')
         lista = arquivo.abrir_arquivo()
-        dados = (f'ID da compra: {nova_compra.get_id_compra()}, '
-                 f'Cliente: {nova_compra.get_nome_cliente()}, '
-                 f'Telefone: {nova_compra.get_telefone_cliente()}, '
-                 f'Endereço: {nova_compra.get_endereco_cliente()}, '
-                 f'Produto: {nova_compra.get_nome_produto()}, '
-                 f'Quantidade de tintas: {nova_compra.get_quantidade_compra()}, '
-                 f'{nova_compra.get_valor_compra()}\n')
+        dados = (        
+            f'{nova_compra.get_id_compra()}, {nova_compra.get_nome_cliente()},' 
+            f'{nova_compra.get_telefone_cliente()}, {nova_compra.get_endereco_cliente()},' 
+            f'{nova_compra.get_nome_produto()}, {nova_compra.get_quantidade_compra()}, ' 
+            f'{nova_compra.calcular_preco()}\n')
 
         lista.write(dados)
         arquivo.fechar_arquivo(lista)
-        
+
     except FileNotFoundError as e:
         print(f'\t\tArquivo de lista não foi encontrado!\n{e}')
     except IOError as e:

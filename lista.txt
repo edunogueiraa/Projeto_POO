@@ -1,1 +1,1 @@
-ID da compra: tinta , Cliente: 1, Telefone: Eduardo , Endereço: 999999, Produto: Rua , Quantidade de tintas: 4, 10
+Azul, rosa e roxa , 1,Eduardo, 99999999,Rua das ruas , 3, 30.0

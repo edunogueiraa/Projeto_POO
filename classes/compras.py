@@ -31,11 +31,11 @@ class Cliente:
 #Class herda de Cliente
 class Compra(Cliente):
 
-    def __init__(self, nome_cliente: str, telefone_cliente: str, endereco_cliente: str, nome_produto: str,id_compra: int, quantidade_compra: int):
+    def __init__(self, nome_cliente: str, telefone_cliente: str, endereco_cliente: str, nome_produto: str,id_compra: int, quantidade_compra: int, valor_compra: float):
         super().__init__(nome_cliente, telefone_cliente, endereco_cliente)
         self.__id_compra = id_compra 
         self.__nome_produtos = nome_produto
-        self.__valor_compra = 10
+        self.__valor_compra = valor_compra
         self.__quantidade_compra = quantidade_compra
 
     #getters
@@ -67,11 +67,15 @@ class Compra(Cliente):
         self.__quantidade_compra = nova_quantidade
 
     #Calcular preço pela quantidade de latas compradas com o padra de preço de cada lata
-def calcular_preco():
+    def calcular_preco(self):
+        quantidade = self.get_quantidade_compra()
 
-    quantidade = get_quantidade_compra()
-    preco = get_valor_compra()
+        # Certifique-se de que set_valor_compra retorna um valor numérico
+        preco = self.get_valor_compra()
 
-    preco_total = preco * quantidade
-    print(f"Preço total: R$ {preco_total:.2f}")
-    return preco_total
+        # Veja se valor_compra e numérico antes de multiplicar
+        if isinstance(preco, (int, float)):
+            preco_total = (preco * quantidade)
+            return preco_total
+        else:
+            return "Erro: preço não é um valor numérico"

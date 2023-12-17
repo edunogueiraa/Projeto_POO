@@ -16,7 +16,7 @@ def menuInicial():
     while continuarMenu == 's': 
         opcao = input(f'''
         {'-' * 64}
-                    PROJETO LOJA DE TINTAS (POO)            
+                    PROJETO LOJA DE TINTAS (POO)\n            
         {contar_compra()} COMPRAS CADASTRADAS\n
         ÚLTIMA COMPRA: \n 
 
