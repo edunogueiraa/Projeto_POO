@@ -1,3 +1,4 @@
+from action import deletar_compra
 from action import listar_compra
 from action import contar_compra
 from action import cadastrar_compra

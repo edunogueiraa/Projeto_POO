@@ -82,6 +82,35 @@ def contar_compra() -> int:
     else:
         print('\t\tNão existir compras ...')
         return 0
+    
+def deletar_compra(id_deletado=-1):
+    if id_deletado == -1:
+        id_deletado = input('\t\tDigite o ID  da compra para ser deletado: ')
+    else:
+        id_deletado = id_deletado
+
+    arquivo = open('lista.txt', 'r', encoding='utf-8')
+    aux, aux2 = [], []
+
+    for i in arquivo:
+        aux.append(i)
+
+    for i in range(1, len(aux)):
+        id_temp = aux[i].split(",")[0]
+
+        if id_deletado != id_temp:
+            aux2.append(aux[i])
+
+    arquivo.close()
+    arquivo = open('lista.txt', 'w', encoding='utf-8')
+
+    for j in aux2:
+        arquivo.write(j)
+
+    arquivo.close()
+
+    print('\t\tCompra removida com sucesso!!!')
+
 
 def verifica_arquivo_existente(arquivo: str) -> bool:
     # se arquivo não existir, retorne False
