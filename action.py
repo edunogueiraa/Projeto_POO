@@ -66,6 +66,15 @@ def exibe_compra(compra):
           f'valor: {compra.split(",")[6]}\n\n ', end=''
           )
 
+def buscar_compra_pelo_cliente():
+    nome = input('\t\tDigite o nome do cliente: ')
+    arquivo = open('lista.txt', 'r', encoding='utf-8')
+
+    for elemento in arquivo:
+        if nome.lower() in elemento.split(',')[2].lower():
+            exibe_compra(elemento)
+
+    arquivo.close()
 
 def contar_compra() -> int:
     if verifica_arquivo_existente('lista.txt'):

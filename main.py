@@ -1,3 +1,4 @@
+from action import buscar_compra_pelo_cliente
 from action import deletar_compra
 from action import listar_compra
 from action import contar_compra
@@ -24,10 +25,10 @@ def menuInicial():
 
         MENU PRINCIPAL:
 
-        [1] CADASTRAR COMPRA       \t[6] ATUALIZAR PREÇO
-        [2] LISTAR COMPRAS         \t[7] BUSCAR COMPRA POR NOME
-        [3] DELETAR COMPRA         \t[0] SAIR DO MENU
-        [4] RESETAR ARQUIVO        
+        [1] CADASTRAR COMPRA$       \t[6] MISTURADOR DE CORES
+        [2] LISTAR COMPRAS$         \t[7] BUSCAR COMPRA POR CLIENTE$
+        [3] DELETAR COMPRA$         \t[0] SAIR DO MENU$
+        [4] RESETAR ARQUIVO$        
         [5] SOBRE O CLIENTE     
                                     
         {'-' * 64}
@@ -45,9 +46,9 @@ def menuInicial():
         elif opcao == "5":
             emitir_nota_fiscal()
         elif opcao == "6":
-            atualizar_precos()
+            paleta_e_mistura_cores()
         elif opcao == "7":
-            buscar_produto()
+            buscar_compra_pelo_cliente()
         elif opcao == "8":
             emitir_nota_fiscal()
         elif opcao == "9":
