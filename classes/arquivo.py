@@ -3,7 +3,12 @@ from io import TextIOWrapper
 class Arquivo:
     __slots__ = ['__name_file', '__operation', '__encoding']
 
-    def __init__(self, name_file, operation, encoding='utf-8'):
+    def __init__(
+            self,
+            name_file,
+            operation,
+            encoding='utf-8'
+    ):
         self.__name_file = name_file
         self.__operation = operation
         self.__encoding = encoding

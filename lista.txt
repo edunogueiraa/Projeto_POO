@@ -1,0 +1,1 @@
+ID da compra: tinta , Cliente: 1, Telefone: Eduardo , Endereço: 999999, Produto: Rua , Quantidade de tintas: 4, 10

@@ -15,7 +15,7 @@ class Cliente:
         return self.__telefone_cliente
 
     def get_endereco_cliente(self):
-        return self.endereco_cliente
+        return self.__endereco_cliente
     
     # Setters
     
@@ -31,11 +31,11 @@ class Cliente:
 #Class herda de Cliente
 class Compra(Cliente):
 
-    def __init__(self, nome_produto: str,id_compra: int, valor_compra: float, quantidade_compra: int):
-
+    def __init__(self, nome_cliente: str, telefone_cliente: str, endereco_cliente: str, nome_produto: str,id_compra: int, quantidade_compra: int):
+        super().__init__(nome_cliente, telefone_cliente, endereco_cliente)
         self.__id_compra = id_compra 
         self.__nome_produtos = nome_produto
-        self.__valor_compra = valor_compra
+        self.__valor_compra = 10
         self.__quantidade_compra = quantidade_compra
 
     #getters
@@ -43,7 +43,7 @@ class Compra(Cliente):
     def get_id_compra(self):
         return self.__id_compra
 
-    def get_nome_produtos(self):
+    def get_nome_produto(self):
         return self.__nome_produtos
     
     def get_valor_compra(self):
@@ -57,7 +57,7 @@ class Compra(Cliente):
     def set_id_compra(self, id_novo):
         self.__id_compra = id_novo
 
-    def set_nome_produtos(self, nome_novo):
+    def set_nome_produto(self, nome_novo):
         self.__nome_produtos = nome_novo
 
     def set_valor_compra(self,novo_valor):
@@ -65,3 +65,13 @@ class Compra(Cliente):
 
     def set_quantidade_compra(self, nova_quantidade):
         self.__quantidade_compra = nova_quantidade
+
+    #Calcular preço pela quantidade de latas compradas com o padra de preço de cada lata
+def calcular_preco():
+
+    quantidade = get_quantidade_compra()
+    preco = get_valor_compra()
+
+    preco_total = preco * quantidade
+    print(f"Preço total: R$ {preco_total:.2f}")
+    return preco_total
