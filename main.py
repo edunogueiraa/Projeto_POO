@@ -1,4 +1,4 @@
-from action import descricao
+from action import adicionar_descricao
 from action import ultima_compra
 from action import atualizar_compra
 from action import buscar_compra_pelo_cliente
@@ -47,7 +47,7 @@ def menuInicial():
         elif opcao == "4":
             resetar_arquivo()
         elif opcao == "5":
-            descricao()
+            adicionar_descricao()
         elif opcao == "6":
             atualizar_compra()
         elif opcao == "7":

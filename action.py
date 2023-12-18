@@ -2,8 +2,26 @@ from time import sleep
 from classes.compras import Compra
 from classes.arquivo import Arquivo
 
-def descricao():
-    return "Adicionar uma descrição"
+def adicionar_descricao():
+    # Obtenha o ID da compra e a descrição do usuário
+    id_compra = int(input('\t\tDigite o ID da compra: '))
+    descricao = input('\t\tDigite a descrição: ')
+
+    # Abra o arquivo e leia as linhas
+    with open('lista.txt', 'r', encoding='utf-8') as compras:
+        linhas = compras.readlines()
+
+    # Encontre a compra com o ID fornecido e atualize sua descrição
+    for i, linha in enumerate(linhas):
+        partes = linha.split(',')
+        if int(partes[0]) == id_compra:
+            compra = Compra(*partes)
+            compra.set_descricao(descricao)
+            linhas[i] = str(compra) + '\n'  # Supondo que você tenha um método __str__ adequado na classe Compra
+
+    # Escreva as linhas de volta no arquivo
+    with open('lista.txt', 'w', encoding='utf-8') as compras:
+        compras.writelines(linhas)
 
 def cadastrar_compra():
 

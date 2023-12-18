@@ -1,21 +1,18 @@
-class Descrição:
+class Descricao:
     def __init__(self, descricao: str):
-        
         self.__descricao = descricao
 
     def get_descricao(self):
         return self.__descricao
-    
+
     def set_descricao(self, nova_descricao):
         self.__descricao = nova_descricao
 
+# Vai herdar a descrição
+class Compra(Descricao):
+    def __init__(self, id_compra: str, nome_cliente: str, telefone_cliente: str, endereco_cliente: str, nome_produto: str, valor_compra: str, quantidade_compra: str, descricao: str):
+        super().__init__(descricao)  # Chama o construtor da classe base usando super()
 
-
-#Vai herdar uma descrição
-class Compra(Descrição):
-    def __init__(self, id_compra: str, nome_cliente: str, telefone_cliente: str, endereco_cliente: str, nome_produto: str, valor_compra: str, quantidade_compra: str ):
-
-        
         self.__id_compra = id_compra
         self.__nome_cliente = nome_cliente
         self.__telefone_cliente = telefone_cliente
