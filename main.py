@@ -28,10 +28,10 @@ def menuInicial():
 
         MENU PRINCIPAL:
 
-        [1] CADASTRAR COMPRA$       \t[6] ATUALIZAR COMPRA$
-        [2] LISTAR COMPRAS$         \t[7] BUSCAR COMPRA POR CLIENTE$
-        [3] DELETAR COMPRA$         \t[0] SAIR DO MENU$
-        [4] RESETAR ARQUIVO$        
+        [1] CADASTRAR COMPRA       \t[6] ATUALIZAR COMPRA
+        [2] LISTAR COMPRAS         \t[7] BUSCAR COMPRA POR CLIENTE
+        [3] DELETAR COMPRA         \t[0] SAIR DO MENU
+        [4] RESETAR ARQUIVO        
         [5] ADICIONAR DESCRIAÇÃO     
                                     
         {'-' * 64}

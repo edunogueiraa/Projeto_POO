@@ -1,27 +1,45 @@
 from time import sleep
-from classes.compras import Compra
+from classes.compras import Compra, Descricao
 from classes.arquivo import Arquivo
 
 def adicionar_descricao():
-    # Obtenha o ID da compra e a descrição do usuário
-    id_compra = int(input('\t\tDigite o ID da compra: '))
-    descricao = input('\t\tDigite a descrição: ')
+    try:
+        id_compra = int(input('\t\tDigite o ID da compra: '))
+        descricao_texto = input('\t\tDigite a descrição: ')
 
-    # Abra o arquivo e leia as linhas
-    with open('lista.txt', 'r', encoding='utf-8') as compras:
-        linhas = compras.readlines()
+        if id_existente(id_compra):
+            # Abra o arquivo para leitura
+            arquivo_leitura = open('lista.txt', 'r', encoding='utf-8')
+            linhas = arquivo_leitura.readlines()
+            arquivo_leitura.close()
 
-    # Encontre a compra com o ID fornecido e atualize sua descrição
-    for i, linha in enumerate(linhas):
-        partes = linha.split(',')
-        if int(partes[0]) == id_compra:
-            compra = Compra(*partes)
-            compra.set_descricao(descricao)
-            linhas[i] = str(compra) + '\n'  # Supondo que você tenha um método __str__ adequado na classe Compra
+            # Abra o arquivo para escrita
+            arquivo_escrita = open('lista.txt', 'w', encoding='utf-8')
 
-    # Escreva as linhas de volta no arquivo
-    with open('lista.txt', 'w', encoding='utf-8') as compras:
-        compras.writelines(linhas)
+            # Percorra as linhas, adicionando a descrição à compra correta
+            for linha in linhas:
+                partes = linha.split(',')
+                id_temp = int(partes[0])
+
+                if id_temp == id_compra:
+                    # Adicione a descrição à linha
+                    linha = linha.rstrip('\n')  # Remova a quebra de linha do final
+                    linha += f',{descricao_texto}\n'
+
+                # Escreva a linha no arquivo
+                arquivo_escrita.write(linha)
+
+            arquivo_escrita.close()
+            print(f'\t\tDescrição adicionada à compra com ID {id_compra}.')
+
+        else:
+            print(f'\t\tCompra com ID {id_compra} não encontrada.')
+
+    except ValueError:
+        print('\t\tPor favor, insira um ID válido (número inteiro).')
+    except Exception as e:
+        print(f'\t\tOcorreu um erro ao adicionar a descrição: {e}')
+
 
 def cadastrar_compra():
 
