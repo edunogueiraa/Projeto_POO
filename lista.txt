@@ -1,2 +1,2 @@
-azul - rosa - verde, 1,Eduardo, 999999,Rua rua , 3, 30.0
-Azul verde , 2,Eduardo, 9999999,rua rua, 2, 20.0
+1, Eduardo ,99999999, rua das ruas ,azul - rosa, 10.0, 20.0
+2, Jessica ,8888888, Rua das rosas ,preta - azul - verde - cinza , 10.0, 40.0

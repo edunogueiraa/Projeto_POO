@@ -134,6 +134,52 @@ def verifica_arquivo_existente(arquivo: str) -> bool:
         print(f'Arquivo {arquivo} não existe :/')
         return False
 
+def atualizar_compra():
+    id_compra_atualizar = int(input('\t\tDigite o id da compra para atualizar: '))
+    
+    arquivo = open('lista.txt', 'r', encoding='utf-8')
+    aux, aux2 = [], []
+
+    for i in arquivo:
+        aux.append(i)
+
+    for i in range(1, len(aux)):
+        id_temp = int(aux[i].split(",")[0])
+
+        if id_compra_atualizar != id_temp:
+            aux2.append(aux[i])
+
+    arquivo.close()
+
+    arquivo = open('lista.txt', 'w', encoding='utf-8')
+
+    for i in aux2:
+        arquivo.write(i)
+
+    # Obter os novos dados da compra
+    id_compra = id_compra_atualizar
+    nome_cliente = input('\t\tEscreva o nome do cliente: ')
+    telefone_cliente = input('\t\tEscreva o telefone do cliente: ')
+    endereco_cliente = input('\t\tEscreva o endereço do cliente: ')
+    nome_produto = input('\t\tDigite as cores *(azul - rosa): ')
+    quantidade_compra = int(input('\t\tQuantidade de latas de tinta: '))
+    valor_compra = float(input('\t\tDigite o valor atual de uma lata de tinta: '))
+
+    try:
+        arquivo = open('lista.txt', 'a', encoding='utf-8')
+        dados = (
+            f'{id_compra}, {nome_cliente},'
+            f'{telefone_cliente}, {endereco_cliente},'
+            f'{nome_produto}, {quantidade_compra}, '
+            f'{valor_compra}\n'
+        )
+        arquivo.write(dados)
+        arquivo.close()
+        print('\t\tCompra atualizada com sucesso')
+    except FileNotFoundError as e:
+        print(f'\t\tOcorreu um erro ao salvar a compra!\n{e}')
+
+
 
 def resetar_arquivo():
     f = open('lista.txt', 'r+', encoding='utf-8')
