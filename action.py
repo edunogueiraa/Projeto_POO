@@ -8,25 +8,22 @@ def adicionar_descricao():
         descricao_texto = input('\t\tDigite a descrição: ')
 
         if id_existente(id_compra):
-            # Abra o arquivo para leitura
+
             arquivo_leitura = open('lista.txt', 'r', encoding='utf-8')
             linhas = arquivo_leitura.readlines()
             arquivo_leitura.close()
 
-            # Abra o arquivo para escrita
             arquivo_escrita = open('lista.txt', 'w', encoding='utf-8')
 
-            # Percorra as linhas, adicionando a descrição à compra correta
             for linha in linhas:
                 partes = linha.split(',')
                 id_temp = int(partes[0])
 
                 if id_temp == id_compra:
-                    # Adicione a descrição à linha
-                    linha = linha.rstrip('\n')  # Remova a quebra de linha do final
+                    # Adicione a descrição na linha
+                    linha = linha.rstrip('\n')  # Removendo a quebra de linha do final
                     linha += f',{descricao_texto}\n'
 
-                # Escreva a linha no arquivo
                 arquivo_escrita.write(linha)
 
             arquivo_escrita.close()
@@ -36,9 +33,9 @@ def adicionar_descricao():
             print(f'\t\tCompra com ID {id_compra} não encontrada.')
 
     except ValueError:
-        print('\t\tPor favor, insira um ID válido (número inteiro).')
-    except Exception as e:
-        print(f'\t\tOcorreu um erro ao adicionar a descrição: {e}')
+        print('\t\tPor favor, insira um ID válido.')
+    except Exception as erro:
+        print(f'\t\tOcorreu um erro ao adicionar a descrição: {erro}')
 
 
 def cadastrar_compra():
@@ -55,7 +52,6 @@ def cadastrar_compra():
     quantidade_compra = int(input('\t\tQuantidade de latas de tinta: '))
     valor_compra = float(input('\t\tDigite o valor atual de uma lata de tinta: '))
 
-    # Adicione uma descrição padrão (ou vazia) ao criar a nova instância de Compra
     descricao_padrao = "Descrição padrão"
     nova_compra = Compra(
         id_compra,
@@ -65,7 +61,7 @@ def cadastrar_compra():
         nome_produto,
         valor_compra,
         quantidade_compra,
-        descricao_padrao  # Adicione esse argumento para a descrição
+        descricao_padrao
     )
 
     try:
@@ -89,7 +85,7 @@ def cadastrar_compra():
         print(f'\t\tOcorreu um erro ao salvar a compra!\n{e}')
     else:
         print('\t\tCompra cadastrada com sucesso!!!\n')
-        
+
 def listar_compra():
     arquivo = open('lista.txt', 'r', encoding='utf-8')
 
@@ -114,7 +110,7 @@ def exibe_compra(compra):
           )
 
 def id_existente(id):
-    # Verifica se o id existe no arquivo
+
     if verifica_arquivo_existente('lista.txt'):
         with open('lista.txt', 'r', encoding='utf-8') as compras:
             linhas = compras.readlines()
