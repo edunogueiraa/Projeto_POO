@@ -45,7 +45,7 @@ def cadastrar_compra():
 
     id_compra = contar_compra() + 1
     while id_existente(id_compra):
-        id_compra +=1
+        id_compra += 1
 
     print(f'\t\tIdentificador de nova compra: {id_compra}')
     nome_cliente = input('\t\tEscreva o nome do cliente: ')
@@ -55,24 +55,28 @@ def cadastrar_compra():
     quantidade_compra = int(input('\t\tQuantidade de latas de tinta: '))
     valor_compra = float(input('\t\tDigite o valor atual de uma lata de tinta: '))
 
+    # Adicione uma descrição padrão (ou vazia) ao criar a nova instância de Compra
+    descricao_padrao = "Descrição padrão"
     nova_compra = Compra(
         id_compra,
         nome_cliente,
         telefone_cliente,
         endereco_cliente,
         nome_produto,
+        valor_compra,
         quantidade_compra,
-        valor_compra
+        descricao_padrao  # Adicione esse argumento para a descrição
     )
 
     try:
         arquivo = Arquivo('lista.txt', 'a')
         lista = arquivo.abrir_arquivo()
-        dados = (        
-            f'{nova_compra.get_id_compra()}, {nova_compra.get_nome_cliente()},' 
-            f'{nova_compra.get_telefone_cliente()}, {nova_compra.get_endereco_cliente()},' 
-            f'{nova_compra.get_nome_produto()}, {nova_compra.get_quantidade_compra()}, ' 
-            f'{nova_compra.calcular_preco()}\n')
+        dados = (
+            f'{nova_compra.get_id_compra()}, {nova_compra.get_nome_cliente()},'
+            f'{nova_compra.get_telefone_cliente()}, {nova_compra.get_endereco_cliente()},'
+            f'{nova_compra.get_nome_produto()}, {nova_compra.get_quantidade_compra()}, '
+            f'{nova_compra.calcular_preco()}, {nova_compra.get_descricao()}\n'
+        )
 
         lista.write(dados)
         arquivo.fechar_arquivo(lista)
@@ -85,7 +89,7 @@ def cadastrar_compra():
         print(f'\t\tOcorreu um erro ao salvar a compra!\n{e}')
     else:
         print('\t\tCompra cadastrada com sucesso!!!\n')
-
+        
 def listar_compra():
     arquivo = open('lista.txt', 'r', encoding='utf-8')
 
