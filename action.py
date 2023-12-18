@@ -2,13 +2,20 @@ from time import sleep
 from classes.compras import Compra
 from classes.arquivo import Arquivo
 
+def descricao():
+    return "Adicionar uma descrição"
+
 def cadastrar_compra():
+
     id_compra = contar_compra() + 1
+    while id_existente(id_compra):
+        id_compra +=1
+
     print(f'\t\tIdentificador de nova compra: {id_compra}')
     nome_cliente = input('\t\tEscreva o nome do cliente: ')
     telefone_cliente = input('\t\tEscreva o telefone do cliente: ')
     endereco_cliente = input('\t\tEscreva o endereço do cliente: ')
-    nome_produto = input('\t\tDigite as cores *(azul - rosa): ')
+    nome_produto = input('\t\tDigite as cores (separadas -): ')
     quantidade_compra = int(input('\t\tQuantidade de latas de tinta: '))
     valor_compra = float(input('\t\tDigite o valor atual de uma lata de tinta: '))
 
@@ -66,12 +73,24 @@ def exibe_compra(compra):
           f'valor: {compra.split(",")[6]}\n\n ', end=''
           )
 
+def id_existente(id):
+    # Verifica se o id existe no arquivo
+    if verifica_arquivo_existente('lista.txt'):
+        with open('lista.txt', 'r', encoding='utf-8') as compras:
+            linhas = compras.readlines()
+            for linha in linhas:
+                partes = linha.split(',')
+                id_compra = int(partes[0])
+                if id_compra == id:
+                    return True
+    return False
+
 def buscar_compra_pelo_cliente():
     nome = input('\t\tDigite o nome do cliente: ')
     arquivo = open('lista.txt', 'r', encoding='utf-8')
 
     for elemento in arquivo:
-        if nome.lower() in elemento.split(',')[2].lower():
+        if nome.lower() in elemento.split(',')[1].lower():
             exibe_compra(elemento)
 
     arquivo.close()
@@ -83,7 +102,6 @@ def contar_compra() -> int:
         with(open('lista.txt', 'r', encoding='utf-8')) as compras:
             linhas = compras.readlines()
 
-        # Se a variável de iteração do for (i) não for ser usada na iteração, usar um underscore ao invés.
         for _ in linhas:
             num_compras += 1
 
@@ -104,7 +122,7 @@ def deletar_compra(id_deletado=-1):
     for i in arquivo:
         aux.append(i)
 
-    for i in range(1, len(aux)):
+    for i in range(0, len(aux)):
         id_temp = aux[i].split(",")[0]
 
         if id_deletado != id_temp:
@@ -124,7 +142,6 @@ def deletar_compra(id_deletado=-1):
 def verifica_arquivo_existente(arquivo: str) -> bool:
     # se arquivo não existir, retorne False
     # caso contrário, retorne True
-
     try:
         lista = open('lista.txt', encoding='utf-8')  # 'r' pé o modo padrão de abertura de arquivo
         lista.close()
@@ -136,14 +153,16 @@ def verifica_arquivo_existente(arquivo: str) -> bool:
 
 def atualizar_compra():
     id_compra_atualizar = int(input('\t\tDigite o id da compra para atualizar: '))
-    
+    deletar_compra(id_compra_atualizar)
+    listar_compra()
+
     arquivo = open('lista.txt', 'r', encoding='utf-8')
     aux, aux2 = [], []
 
     for i in arquivo:
         aux.append(i)
 
-    for i in range(1, len(aux)):
+    for i in range(0, len(aux)):
         id_temp = int(aux[i].split(",")[0])
 
         if id_compra_atualizar != id_temp:
@@ -161,7 +180,7 @@ def atualizar_compra():
     nome_cliente = input('\t\tEscreva o nome do cliente: ')
     telefone_cliente = input('\t\tEscreva o telefone do cliente: ')
     endereco_cliente = input('\t\tEscreva o endereço do cliente: ')
-    nome_produto = input('\t\tDigite as cores *(azul - rosa): ')
+    nome_produto = input('\t\tDigite as cores (separadas -): ')
     quantidade_compra = int(input('\t\tQuantidade de latas de tinta: '))
     valor_compra = float(input('\t\tDigite o valor atual de uma lata de tinta: '))
 
@@ -179,7 +198,23 @@ def atualizar_compra():
     except FileNotFoundError as e:
         print(f'\t\tOcorreu um erro ao salvar a compra!\n{e}')
 
+def ultima_compra():
+    try:
+        with(open('lista.txt', 'r', encoding='utf-8')) as Arquivo:
+            ultima_compra = Arquivo.readlines()[-1]
+            ultimo_contato_txt = (
+                f'\n\n\t\tId: {ultima_compra.split(",")[0]}\n'
+                f'\t\tNome: {ultima_compra.split(",")[1]}\n'
+                f'\t\tTelefone: {ultima_compra.split(",")[2]}\n'
+                f'\t\tEndereço: {ultima_compra.split(",")[3]}\n'
+                f'\t\tCores: {ultima_compra.split(",")[4]}\n'
+                f'\t\tQuantidade: {ultima_compra.split(",")[5]}\n'
+                f'\t\tValor: {ultima_compra.split(",")[6]}'
+            )
 
+            return ultimo_contato_txt
+    except IndexError:
+        return '\t\tNenhuma compra foi cadastrada.'
 
 def resetar_arquivo():
     f = open('lista.txt', 'r+', encoding='utf-8')
@@ -187,21 +222,12 @@ def resetar_arquivo():
 
 def sair():
     print(f'''
-░░░░░░░░░░░░░░░░░░░░░░█████████░░░░░░░░░
-░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███░░░░░░░
-░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███░░░░
-░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██░░
-░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███░
-░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██
-░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
-░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██
-░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██
-██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██
-█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██
-██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██░
-░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██░░░
-░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█░░░░░
-░░████████████░░░█████████████████░░░░░░
+██╗░░░██╗░█████╗░██╗░░░░░████████╗███████╗  ░██████╗███████╗███╗░░░███╗██████╗░██████╗░███████╗██╗██╗██╗
+██║░░░██║██╔══██╗██║░░░░░╚══██╔══╝██╔════╝  ██╔════╝██╔════╝████╗░████║██╔══██╗██╔══██╗██╔════╝██║██║██║
+╚██╗░██╔╝██║░░██║██║░░░░░░░░██║░░░█████╗░░  ╚█████╗░█████╗░░██╔████╔██║██████╔╝██████╔╝█████╗░░██║██║██║
+░╚████╔╝░██║░░██║██║░░░░░░░░██║░░░██╔══╝░░  ░╚═══██╗██╔══╝░░██║╚██╔╝██║██╔═══╝░██╔══██╗██╔══╝░░╚═╝╚═╝╚═╝
+░░╚██╔╝░░╚█████╔╝███████╗░░░██║░░░███████╗  ██████╔╝███████╗██║░╚═╝░██║██║░░░░░██║░░██║███████╗██╗██╗██╗
+░░░╚═╝░░░░╚════╝░╚══════╝░░░╚═╝░░░╚══════╝  ╚═════╝░╚══════╝╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚═╝╚═╝╚═╝
         ''')
     sleep(1)
     print('Saindo ...')

@@ -1,3 +1,5 @@
+from action import descricao
+from action import ultima_compra
 from action import atualizar_compra
 from action import buscar_compra_pelo_cliente
 from action import deletar_compra
@@ -22,15 +24,15 @@ def menuInicial():
         {'-' * 64}
                     PROJETO LOJA DE TINTAS (POO)\n            
         {contar_compra()} COMPRAS CADASTRADAS\n
-        ÚLTIMA COMPRA: \n 
+        ÚLTIMA COMPRA: {ultima_compra()} \n 
 
         MENU PRINCIPAL:
 
-        [1] CADASTRAR COMPRA$       \t[6] ATUALIZAR COMPRA
+        [1] CADASTRAR COMPRA$       \t[6] ATUALIZAR COMPRA$
         [2] LISTAR COMPRAS$         \t[7] BUSCAR COMPRA POR CLIENTE$
         [3] DELETAR COMPRA$         \t[0] SAIR DO MENU$
         [4] RESETAR ARQUIVO$        
-        [5]      
+        [5] ADICIONAR DESCRIAÇÃO     
                                     
         {'-' * 64}
 
@@ -45,15 +47,11 @@ def menuInicial():
         elif opcao == "4":
             resetar_arquivo()
         elif opcao == "5":
-            emitir_nota_fiscal()
+            descricao()
         elif opcao == "6":
             atualizar_compra()
         elif opcao == "7":
             buscar_compra_pelo_cliente()
-        elif opcao == "8":
-            emitir_nota_fiscal()
-        elif opcao == "9":
-            cadastrar_produto()
         elif opcao == '0':
             sair()
         else:
