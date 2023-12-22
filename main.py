@@ -1,4 +1,4 @@
-from action import adicionar_descricao
+from action import misturar_cores
 from action import ultima_compra
 from action import atualizar_compra
 from action import buscar_compra_pelo_cliente
@@ -28,11 +28,10 @@ def menuInicial():
 
         MENU PRINCIPAL:
 
-        [1] CADASTRAR COMPRA       \t[6] ATUALIZAR COMPRA
-        [2] LISTAR COMPRAS         \t[7] BUSCAR COMPRA POR CLIENTE
-        [3] DELETAR COMPRA         \t[0] SAIR DO MENU
-        [4] RESETAR ARQUIVO        
-        [5] ADICIONAR DESCRIAÇÃO     
+        [1] CADASTRAR COMPRA       \t[5] ATUALIZAR COMPRA
+        [2] LISTAR COMPRAS         \t[6] BUSCAR COMPRA POR CLIENTE
+        [3] DELETAR COMPRA         \t[7] MISTURADOR DE CORES
+        [4] RESETAR ARQUIVO        \t[0] SAIR DO MENU    
                                     
         {'-' * 64}
 
@@ -47,11 +46,11 @@ def menuInicial():
         elif opcao == "4":
             resetar_arquivo()
         elif opcao == "5":
-            adicionar_descricao()
-        elif opcao == "6":
             atualizar_compra()
-        elif opcao == "7":
+        elif opcao == "6":
             buscar_compra_pelo_cliente()
+        elif opcao == "7":
+            misturar_cores()
         elif opcao == '0':
             sair()
         else:
@@ -59,7 +58,6 @@ def menuInicial():
                 
             continuarMenu = input('\t\tDeseja voltar ao menu principal? (s/n)').lower() #converte strings para minúsculas
 
-         
          
 if __name__ == '__main__':
         

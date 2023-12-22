@@ -1,45 +1,87 @@
 from time import sleep
-from classes.compras import Compra, Descricao
+from classes.compras import Compra, Tinta
 from classes.arquivo import Arquivo
 
-def adicionar_descricao():
+def misturar_cores():
+    id_compra = int(input('\t\tDigite o ID da compra para adicionar uma mistura: '))
+    if not id_existente(id_compra):
+        print(f'\t\tCompra com ID {id_compra} não encontrada.')
+        return
+
+    print(f'Cores Disponíveis para Mistura:\n'
+          f'[1] Vermelho\n'
+          f'[2] Amarelo\n'
+          f'[3] Azul\n'
+          f'[4] Preto\n'
+          f'[5] Rosa\n'
+          f'[6] Laranja\n'
+          f'[7] Roxo\n')
+
+    escolha1 = int(input("Digite o número da primeira cor: "))
+    escolha2 = int(input("Digite o número da segunda cor: "))
+
+    cores_disponiveis = ["vermelho", "amarelo", "azul", "preto", "rosa", "laranja", "roxo"]
+
     try:
-        id_compra = int(input('\t\tDigite o ID da compra: '))
-        descricao_texto = input('\t\tDigite a descrição: ')
+        tinta1 = Tinta(cores_disponiveis[escolha1 - 1])
+        tinta2 = Tinta(cores_disponiveis[escolha2 - 1])
+    except IndexError:
+        print("Escolha apenas uma cor disponível!")
+        return
 
-        if id_existente(id_compra):
+    combinacoes = {
+        ("vermelho", "amarelo"): "laranja",
+        ("amarelo", "vermelho"): "laranja",
+        ("vermelho", "azul"): "roxo",
+        ("azul", "vermelho"): "roxo",
+        ("amarelo", "azul"): "verde",
+        ("azul", "amarelo"): "verde",
+        ("vermelho", "vermelho"): "vermelho",
+        ("amarelo", "amarelo"): "amarelo",
+        ("azul", "azul"): "azul",
+        ("preto", "preto"): "preto",
+        ("vermelho", "preto"): "borgonha",
+        ("preto", "vermelho"): "borgonha",
+        ("amarelo", "preto"): "marrom",
+        ("preto", "amarelo"): "marrom",
+        ("azul", "preto"): "azul escuro",
+        ("preto", "azul"): "azul escuro",
+        ("rosa", "rosa"): "rosa",
+        ("rosa", "laranja"): "salmao",
+        ("laranja", "rosa"): "salmao",
+        ("rosa", "roxo"): "violeta",
+        ("roxo", "rosa"): "violeta",
+        ("laranja", "laranja"): "laranja",
+        ("laranja", "roxo"): "marrom",
+        ("roxo", "laranja"): "marrom",
+    }
 
-            arquivo_leitura = open('lista.txt', 'r', encoding='utf-8')
-            linhas = arquivo_leitura.readlines()
-            arquivo_leitura.close()
+    if (tinta1.get_resultado_mistura(), tinta2.get_resultado_mistura()) in combinacoes:
+        cor_resultante = combinacoes[(tinta1.get_resultado_mistura(), tinta2.get_resultado_mistura())]
+    elif (tinta2.get_resultado_mistura(), tinta1.get_resultado_mistura()) in combinacoes:
+        cor_resultante = combinacoes[(tinta2.get_resultado_mistura(), tinta1.get_resultado_mistura())]
+    else:
+        cor_resultante = "cor indefinida"
 
-            arquivo_escrita = open('lista.txt', 'w', encoding='utf-8')
+    print(f'\t\tCor resultante ({cor_resultante}) adicionada à compra no ID: {id_compra}.')
 
-            for linha in linhas:
-                partes = linha.split(',')
-                id_temp = int(partes[0])
+    # Atualizar a compra com a nova cor misturada
+    arquivo = open('lista.txt', 'r', encoding='utf-8')
+    linhas = arquivo.readlines()
+    arquivo.close()
 
-                if id_temp == id_compra:
-                    # Adicione a descrição na linha
-                    linha = linha.rstrip('\n')  # Removendo a quebra de linha do final
-                    linha += f',{descricao_texto}\n'
+    for i in range(len(linhas)):
+        partes = linhas[i].split(',')
+        if int(partes[0]) == id_compra:
+            # Substituir o nenhuma parão pela cor misturada
+            linhas[i] = linhas[i].replace(" Nenhuma", cor_resultante)
+            break
 
-                arquivo_escrita.write(linha)
-
-            arquivo_escrita.close()
-            print(f'\t\tDescrição adicionada à compra com ID {id_compra}.')
-
-        else:
-            print(f'\t\tCompra com ID {id_compra} não encontrada.')
-
-    except ValueError:
-        print('\t\tPor favor, insira um ID válido.')
-    except Exception as erro:
-        print(f'\t\tOcorreu um erro ao adicionar a descrição: {erro}')
-
-
+    arquivo = open('lista.txt', 'w', encoding='utf-8')
+    arquivo.writelines(linhas)
+    arquivo.close()
+    
 def cadastrar_compra():
-
     id_compra = contar_compra() + 1
     while id_existente(id_compra):
         id_compra += 1
@@ -52,7 +94,6 @@ def cadastrar_compra():
     quantidade_compra = int(input('\t\tQuantidade de latas de tinta: '))
     valor_compra = float(input('\t\tDigite o valor atual de uma lata de tinta: '))
 
-    descricao_padrao = "Descrição padrão"
     nova_compra = Compra(
         id_compra,
         nome_cliente,
@@ -61,30 +102,29 @@ def cadastrar_compra():
         nome_produto,
         valor_compra,
         quantidade_compra,
-        descricao_padrao
+        cor_misturada = "Nenhuma"
     )
 
     try:
-        arquivo = Arquivo('lista.txt', 'a')
-        lista = arquivo.abrir_arquivo()
+        lista = open('lista.txt', 'a', encoding='utf-8')
         dados = (
             f'{nova_compra.get_id_compra()}, {nova_compra.get_nome_cliente()},'
             f'{nova_compra.get_telefone_cliente()}, {nova_compra.get_endereco_cliente()},'
             f'{nova_compra.get_nome_produto()}, {nova_compra.get_quantidade_compra()}, '
-            f'{nova_compra.calcular_preco()}, {nova_compra.get_descricao()}\n'
+            f'{nova_compra.calcular_preco()}, {nova_compra.get_resultado_mistura()}\n'  # Include mixed color
         )
 
         lista.write(dados)
-        arquivo.fechar_arquivo(lista)
+        lista.close()
 
+        print('\t\tCompra cadastrada com sucesso!!!\n')
     except FileNotFoundError as e:
         print(f'\t\tArquivo de lista não foi encontrado!\n{e}')
     except IOError as e:
         print(f'\t\tOcorreu um erro de entrada de dados!\n{e}')
     except Exception as e:
         print(f'\t\tOcorreu um erro ao salvar a compra!\n{e}')
-    else:
-        print('\t\tCompra cadastrada com sucesso!!!\n')
+
 
 def listar_compra():
     arquivo = open('lista.txt', 'r', encoding='utf-8')
@@ -99,15 +139,22 @@ def listar_compra():
     arquivo.close()
 
 def exibe_compra(compra):
+    partes = compra.split(',')
+    
+    if len(partes) >= 8:
+        cor_misturada = partes[7].strip()
+    else:
+        cor_misturada = "Nenhum"
 
-    print(f'Id: {compra.split(",")[1]}\n '
-          f'Nome: {compra.split(",")[2]}\n '
-          f'Telefone: {compra.split(",")[3]}\n '
-          f'Endereço: {compra.split(",")[4]}\n '
-          f'Cores: {compra.split(",")[0]}\n '
-          f'Quandidade: {compra.split(",")[5]}\n '
-          f'valor: {compra.split(",")[6]}\n\n ', end=''
-          )
+    print(f'Id: {partes[0]}\n'
+          f'Nome: {partes[1]}\n'
+          f'Telefone: {partes[2]}\n'
+          f'Endereço: {partes[3]}\n'
+          f'Cores: {partes[4]}\n'
+          f'Quantidade: {partes[5]}\n'
+          f'Cor Misturada: {cor_misturada}\n'
+          f'Valor: {partes[6]}\n')
+
 
 def id_existente(id):
 
@@ -176,17 +223,14 @@ def deletar_compra(id_deletado=-1):
 
 
 def verifica_arquivo_existente(arquivo: str) -> bool:
-    # se arquivo não existir, retorne False
-    # caso contrário, retorne True
     try:
-        lista = open('lista.txt', encoding='utf-8')  # 'r' pé o modo padrão de abertura de arquivo
-        lista.close()
+        with open(arquivo, 'r', encoding='utf-8') as lista:
+            lista.close()
         return True
-
     except FileNotFoundError:
         print(f'Arquivo {arquivo} não existe :/')
         return False
-
+    
 def atualizar_compra():
     id_compra_atualizar = int(input('\t\tDigite o id da compra para atualizar: '))
     deletar_compra(id_compra_atualizar)
@@ -233,24 +277,41 @@ def atualizar_compra():
         print('\t\tCompra atualizada com sucesso')
     except FileNotFoundError as e:
         print(f'\t\tOcorreu um erro ao salvar a compra!\n{e}')
-
+    
 def ultima_compra():
     try:
-        with(open('lista.txt', 'r', encoding='utf-8')) as Arquivo:
-            ultima_compra = Arquivo.readlines()[-1]
-            ultimo_contato_txt = (
-                f'\n\n\t\tId: {ultima_compra.split(",")[0]}\n'
-                f'\t\tNome: {ultima_compra.split(",")[1]}\n'
-                f'\t\tTelefone: {ultima_compra.split(",")[2]}\n'
-                f'\t\tEndereço: {ultima_compra.split(",")[3]}\n'
-                f'\t\tCores: {ultima_compra.split(",")[4]}\n'
-                f'\t\tQuantidade: {ultima_compra.split(",")[5]}\n'
-                f'\t\tValor: {ultima_compra.split(",")[6]}'
+        with open('lista.txt', 'r', encoding='utf-8') as arquivo:
+            ultima_compra = arquivo.readlines()[-1].strip().split(',')
+            id_compra = ultima_compra[0]
+            nome_cliente = ultima_compra[1]
+            telefone_cliente = ultima_compra[2]
+            endereco_cliente = ultima_compra[3]
+            cores = ultima_compra[4]
+            quantidade = ultima_compra[5]
+            valor = ultima_compra[6]
+
+            if len(ultima_compra) >= 8:
+                cor_misturada = ultima_compra[7].strip()
+            else:
+                cor_misturada = "Nenhum"
+
+            ultima_compra_txt = (
+                f'\n\n\t\tId: {id_compra}\n'
+                f'\t\tNome: {nome_cliente}\n'
+                f'\t\tTelefone: {telefone_cliente}\n'
+                f'\t\tEndereço: {endereco_cliente}\n'
+                f'\t\tCores: {cores}\n'
+                f'\t\tQuantidade: {quantidade}\n'
+                f'\t\tValor: {valor}\n'
+                f'\t\tCor Misturada: {cor_misturada}'
             )
 
-            return ultimo_contato_txt
+            return ultima_compra_txt
+
     except IndexError:
         return '\t\tNenhuma compra foi cadastrada.'
+    except FileNotFoundError:
+        return '\t\tArquivo "lista.txt" não encontrado.'
 
 def resetar_arquivo():
     f = open('lista.txt', 'r+', encoding='utf-8')

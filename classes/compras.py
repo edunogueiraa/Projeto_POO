@@ -1,18 +1,19 @@
-class Descricao:
-    def __init__(self, descricao: str):
-        self.__descricao = descricao
+class Tinta:
+    def __init__(self, resultado_mistura: str):
+        self.__resultado_mistura = resultado_mistura
 
-    def get_descricao(self):
-        return self.__descricao
+    def get_resultado_mistura(self):
+        return self.__resultado_mistura
 
-    def set_descricao(self, nova_descricao):
-        self.__descricao = nova_descricao
+    def set_resultado_mistura(self, nova_mistura: str):
+        self.__resultado_mistura = nova_mistura
 
-# Vai herdar a descrição
-class Compra(Descricao):
-    def __init__(self, id_compra: str, nome_cliente: str, telefone_cliente: str, endereco_cliente: str, nome_produto: str, valor_compra: str, quantidade_compra: str, descricao: str):
-        super().__init__(descricao)  # Chama o construtor da classe base usando super()
 
+class Compra(Tinta):
+    def __init__(self, id_compra: str, nome_cliente: str, telefone_cliente: str, endereco_cliente: str,
+                 nome_produto: str, valor_compra: str, quantidade_compra: str, cor_misturada: str):
+        Tinta.__init__(self, cor_misturada)
+        
         self.__id_compra = id_compra
         self.__nome_cliente = nome_cliente
         self.__telefone_cliente = telefone_cliente
@@ -21,7 +22,6 @@ class Compra(Descricao):
         self.__valor_compra = valor_compra
         self.__quantidade_compra = quantidade_compra
 
-    # getters
     def get_id_compra(self):
         return self.__id_compra
 
@@ -33,7 +33,7 @@ class Compra(Descricao):
 
     def get_endereco_cliente(self):
         return self.__endereco_cliente
-    
+
     def get_nome_produto(self):
         return self.__nome_produto
 
@@ -65,12 +65,9 @@ class Compra(Descricao):
     def set_quantidade_compra(self, nova_quantidade):
         self.__quantidade_compra = nova_quantidade
 
-
-    #Calcular preço pela quantidade de latas compradas com o padra de preço de cada lata
+    # Calcular preço pela quantidade de latas compradas com o padrão de preço de cada lata
     def calcular_preco(self):
-        quantidade = self.get_quantidade_compra()
-
-        preco = self.get_valor_compra()
-
-        preco_total = (preco * quantidade)
+        quantidade = int(self.__quantidade_compra)
+        preco = float(self.__valor_compra)
+        preco_total = preco * quantidade
         return preco_total
